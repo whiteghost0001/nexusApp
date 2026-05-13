@@ -91,6 +91,9 @@ export default {
           primaryBlue: "#1A5888",
           fadedGreen: "#D5ECF8",
           darkGreen: "#0B6655",
+          lemonGreen: "#84D999",
+          mainBackground: "#F3FAFF",
+          darkBrown: "#735C00",
         },
       },
       fontFamily: {

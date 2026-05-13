@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { ComponentType } from "react";
 import {
-  Building2,
+  CalendarClock,
+  ClipboardList,
   Calendar,
   LayoutDashboard,
   MessageSquare,
-  ShieldCheck,
   Stethoscope,
   UserCheck,
   Users,
@@ -25,11 +25,11 @@ interface NavigationItem {
 
 const profileNavigationItems: Record<AppProfile, NavigationItem[]> = {
   hospital: [
-    { name: "Hospital Hub", href: "/dashboard", icon: Building2 },
-    { name: "Patients", href: "/patients", icon: Users },
-    { name: "Clinicians", href: "/doctors", icon: UserCheck },
-    { name: "Appointments", href: "/appointments", icon: Calendar },
-    { name: "Compliance", href: "/analytics", icon: ShieldCheck },
+    { name: "Clinical Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Shift Schedule", href: "/appointments", icon: CalendarClock },
+    { name: "Staff Rosters", href: "/doctors", icon: ClipboardList },
+    { name: "Secure Messaging", href: "/analytics", icon: MessageSquare },
+    { name: "Settings", href: "/settings", icon: Settings },
   ],
   patient: [
     { name: "My Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -47,9 +47,14 @@ const profileNavigationItems: Record<AppProfile, NavigationItem[]> = {
   ],
 };
 
-const bottomNavigationItems: NavigationItem[] = [
-  { name: "Support", href: "/help", icon: HelpCircle },
-];
+const profileBottomNavigationItems: Record<AppProfile, NavigationItem[]> = {
+  hospital: [
+    { name: "Settings", href: "/settings", icon: Settings },
+    { name: "Support", href: "/help", icon: HelpCircle },
+  ],
+  patient: [{ name: "Support", href: "/help", icon: HelpCircle }],
+  "medical-staff": [{ name: "Support", href: "/help", icon: HelpCircle }],
+};
 
 const profileStyles: Record<AppProfile, { active: string; brandText: string }> =
   {
@@ -83,6 +88,7 @@ interface SidebarProps {
 export function Sidebar({ isOpen, onClose, profile }: SidebarProps) {
   const styles = profileStyles[profile];
   const navigationItems = profileNavigationItems[profile];
+  const bottomNavigationItems = profileBottomNavigationItems[profile];
   const basePath = profileBasePath[profile];
 
   return (
@@ -122,7 +128,7 @@ export function Sidebar({ isOpen, onClose, profile }: SidebarProps) {
             <li key={item.name}>
               <NavLink
                 to={`${basePath}${item.href}`}
-                onClick={onClose} // Close sidebar on mobile when navigating
+                onClick={onClose}
                 className={({ isActive }) =>
                   cn(
                     "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
@@ -138,6 +144,13 @@ export function Sidebar({ isOpen, onClose, profile }: SidebarProps) {
             </li>
           ))}
         </ul>
+
+        {/* Quick Schedule button — hospital only */}
+        {profile === "hospital" && (
+          <button className="mt-6 w-full rounded-xl bg-gradient-to-r from-secondary-700 to-secondary-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90">
+            Quick Schedule
+          </button>
+        )}
       </nav>
 
       {/* Bottom Navigation */}
