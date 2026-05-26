@@ -6,8 +6,12 @@ import {
   waitlistFooterSections,
   waitlistNavItems,
 } from "../constants/waitlistContent";
+import { useWaitlistFlow } from "./waitlistFlowContext";
+import { WaitlistJoinModalFlow } from "./WaitlistJoinModalFlow";
 
 export function WaitlistFlowShell() {
+  const { openJoinModal } = useWaitlistFlow();
+
   return (
     <div className="min-h-screen bg-white text-onboarding-textPrimary">
       <header className="sticky top-0 z-20 border-b border-neutral-200/80 bg-white/90 backdrop-blur">
@@ -35,17 +39,21 @@ export function WaitlistFlowShell() {
             ))}
           </nav>
 
-          <Link to="/waitlist/join">
-            <Button className="rounded-xl bg-gradient-to-r from-onboarding-primaryGreen to-onboarding-primaryBlue px-5 text-sm font-semibold text-white shadow-soft">
-              Join Waitlist
-            </Button>
-          </Link>
+          <Button
+            type="button"
+            onClick={openJoinModal}
+            className="rounded-xl bg-gradient-to-r from-onboarding-primaryGreen to-onboarding-primaryBlue px-5 text-sm font-semibold text-white shadow-soft"
+          >
+            Join Waitlist
+          </Button>
         </div>
       </header>
 
       <main>
         <Outlet />
       </main>
+
+      <WaitlistJoinModalFlow />
 
       <footer className="border-t border-neutral-200 bg-white px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.2fr_repeat(3,_1fr)]">
