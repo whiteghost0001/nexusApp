@@ -17,6 +17,7 @@
     "react-dom": "^18.2.0",
     "react-paystack": "^6.0.0",
     "react-router-dom": "^6.20.1",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^2.0.0",
     "zustand": "^4.4.7"
   },

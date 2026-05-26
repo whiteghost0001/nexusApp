@@ -10,13 +10,13 @@ import {
   Wallet,
   Zap,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Button } from "@/shared/components/ui/Button";
 import {
   waitlistInsights,
   waitlistPartners,
   waitlistSteps,
 } from "../constants/waitlistContent";
+import { useWaitlistFlow } from "./waitlistFlowContext";
 
 const ecosystemColumns = [
   {
@@ -80,6 +80,8 @@ const ecosystemColumns = [
 ] as const;
 
 export function WaitlistLandingStep() {
+  const { openJoinModal } = useWaitlistFlow();
+
   return (
     <div className="bg-[#f4f6fa]">
       <section className="px-4 pb-12 pt-12 sm:px-6 lg:px-8 lg:pb-16 lg:pt-20">
@@ -102,11 +104,13 @@ export function WaitlistLandingStep() {
           </p>
 
           <div className="mt-8">
-            <Link to="/waitlist/join">
-              <Button className="rounded-xl bg-gradient-to-r from-onboarding-primaryGreen to-onboarding-primaryBlue px-7 py-3 text-sm font-semibold text-white">
-                Join Waitlist <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            <Button
+              type="button"
+              onClick={openJoinModal}
+              className="rounded-xl bg-gradient-to-r from-onboarding-primaryGreen to-onboarding-primaryBlue px-7 py-3 text-sm font-semibold text-white"
+            >
+              Join Waitlist <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
 
           <div className="mx-auto mt-12 max-w-5xl overflow-hidden rounded-2xl border border-neutral-200 bg-[#0a2f4a] shadow-strong">
@@ -176,9 +180,9 @@ export function WaitlistLandingStep() {
                 Eliminate staffing gaps with automated compliance and verified
                 talent pipelines.
               </p>
-              <button className="text-sm bg-white text-onboarding-primaryBlue py-4 px-6 rounded-lg">
+              {/* <button className="text-sm bg-white text-onboarding-primaryBlue py-4 px-6 rounded-lg">
                 Partner with Us
-              </button>
+              </button> */}
             </div>
           </article>
 
@@ -200,9 +204,9 @@ export function WaitlistLandingStep() {
                 The freedom to work anywhere, powered by AI documentation that
                 saves hours daily.
               </p>
-              <button className="text-sm bg-white text-onboarding-primaryBlue py-4 px-6 rounded-lg">
+              {/* <button className="text-sm bg-white text-onboarding-primaryBlue py-4 px-6 rounded-lg">
                 Start practicing
-              </button>
+              </button> */}
             </div>
           </article>
         </div>
@@ -320,11 +324,13 @@ export function WaitlistLandingStep() {
               className="h-12 flex-1 rounded-lg border border-white/70 bg-white px-4 text-sm text-neutral-800 outline-none"
               readOnly
             />
-            <Link to="/waitlist/join" className="sm:w-auto">
-              <Button className="h-12 w-full rounded-lg bg-white px-6 text-sm font-semibold text-onboarding-primaryBlue hover:bg-neutral-100">
-                Secure My Spot
-              </Button>
-            </Link>
+            <Button
+              type="button"
+              onClick={openJoinModal}
+              className="h-12 w-full rounded-lg bg-white px-6 text-sm font-semibold text-onboarding-primaryBlue hover:bg-neutral-100 sm:w-auto"
+            >
+              Secure My Spot
+            </Button>
           </div>
         </div>
       </section>

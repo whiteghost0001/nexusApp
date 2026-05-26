@@ -11,9 +11,6 @@ import {
 } from "@/features/onboarding/components";
 import { WaitlistFlowPage } from "@/features/waitlist/components/WaitlistFlowPage";
 import { WaitlistLandingStep } from "@/features/waitlist/components/WaitlistLandingStep";
-import { WaitlistRoleStep } from "@/features/waitlist/components/WaitlistRoleStep";
-import { WaitlistHospitalFormStep } from "@/features/waitlist/components/WaitlistHospitalFormStep";
-import { WaitlistHealthWorkerFormStep } from "@/features/waitlist/components/WaitlistHealthWorkerFormStep";
 import { WaitlistSuccessStep } from "@/features/waitlist/components/WaitlistSuccessStep";
 import { PATHS } from "./paths";
 
@@ -55,11 +52,14 @@ export const authRoutes: RouteObject[] = [
     children: [
       { index: true, element: <Navigate to="landing" replace /> },
       { path: "landing", element: <WaitlistLandingStep /> },
-      { path: "join", element: <WaitlistRoleStep /> },
-      { path: "form/hospital", element: <WaitlistHospitalFormStep /> },
+      { path: "join", element: <Navigate to="/waitlist/landing" replace /> },
+      {
+        path: "form/hospital",
+        element: <Navigate to="/waitlist/landing" replace />,
+      },
       {
         path: "form/health-worker",
-        element: <WaitlistHealthWorkerFormStep />,
+        element: <Navigate to="/waitlist/landing" replace />,
       },
       { path: "success", element: <WaitlistSuccessStep /> },
       { path: "*", element: <Navigate to="landing" replace /> },
