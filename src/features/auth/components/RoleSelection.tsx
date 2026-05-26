@@ -94,45 +94,45 @@ export function RoleSelection() {
               </p>
             </div>
 
-            {/* Role Cards - Two Column Layout */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
+            {/* Role Cards - Vertical Stack Layout */}
+            <div className="space-y-4 mb-8">
               {/* Health Workers Card */}
               <div
                 onClick={() => handleRoleSelect('health-worker')}
-                className={`p-6 rounded-xl border cursor-pointer transition-all duration-200 text-center ${
+                className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-200 text-center ${
                   selectedRole === 'health-worker'
-                    ? 'border-onboarding-primaryBlue bg-blue-50'
+                    ? 'border-teal-400 bg-teal-50'
                     : 'border-gray-200 bg-white hover:border-gray-300'
                 }`}
               >
                 <div className="flex flex-col items-center">
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${
                     selectedRole === 'health-worker'
-                      ? 'bg-blue-100'
-                      : 'bg-blue-50'
+                      ? 'bg-teal-100'
+                      : 'bg-teal-50'
                   }`}>
-                    <Stethoscope className="w-6 h-6 text-blue-600" />
+                    <Stethoscope className="w-8 h-8 text-teal-600" />
                   </div>
-                  <h3 className="font-semibold text-onboarding-textPrimary mb-2 text-base">
+                  <h3 className="font-bold text-onboarding-textPrimary mb-3 text-lg">
                     Health Workers
                   </h3>
-                  <p className="text-sm text-onboarding-textSecondary leading-relaxed mb-4">
+                  <p className="text-sm text-onboarding-textSecondary leading-relaxed mb-6 px-4">
                     Medical professionals providing direct patient care, consultations, and clinical services.
                   </p>
                   
                   {/* Feature List */}
-                  <div className="space-y-2 text-left w-full">
-                    <div className="flex items-center space-x-2">
+                  <div className="space-y-3 text-center">
+                    <div className="flex items-center justify-center space-x-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Direct patient consultations</span>
+                      <span className="text-sm text-onboarding-textSecondary">Direct patient consultations</span>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center justify-center space-x-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Clinical assessments</span>
+                      <span className="text-sm text-onboarding-textSecondary">Clinical assessments</span>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center justify-center space-x-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Treatment planning</span>
+                      <span className="text-sm text-onboarding-textSecondary">Treatment planning</span>
                     </div>
                   </div>
                 </div>
@@ -141,40 +141,40 @@ export function RoleSelection() {
               {/* Hospital Administrator Card */}
               <div
                 onClick={() => handleRoleSelect('hospital')}
-                className={`p-6 rounded-xl border cursor-pointer transition-all duration-200 text-center ${
+                className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-200 text-center ${
                   selectedRole === 'hospital'
-                    ? 'border-onboarding-primaryBlue bg-blue-50'
+                    ? 'border-teal-400 bg-teal-50'
                     : 'border-gray-200 bg-white hover:border-gray-300'
                 }`}
               >
                 <div className="flex flex-col items-center">
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${
                     selectedRole === 'hospital'
-                      ? 'bg-green-100'
-                      : 'bg-green-50'
+                      ? 'bg-teal-100'
+                      : 'bg-gray-100'
                   }`}>
-                    <Building2 className="w-6 h-6 text-green-600" />
+                    <Building2 className="w-8 h-8 text-gray-600" />
                   </div>
-                  <h3 className="font-semibold text-onboarding-textPrimary mb-2 text-base">
+                  <h3 className="font-bold text-onboarding-textPrimary mb-3 text-lg">
                     Hospital Administrator
                   </h3>
-                  <p className="text-sm text-onboarding-textSecondary leading-relaxed mb-4">
+                  <p className="text-sm text-onboarding-textSecondary leading-relaxed mb-6 px-4">
                     Healthcare facility management, staff coordination, and operational oversight.
                   </p>
                   
                   {/* Feature List */}
-                  <div className="space-y-2 text-left w-full">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Staff management</span>
+                  <div className="space-y-3 text-center">
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                      <span className="text-sm text-onboarding-textSecondary">Staff management</span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Shift scheduling</span>
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                      <span className="text-sm text-onboarding-textSecondary">Shift scheduling</span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Resource allocation</span>
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                      <span className="text-sm text-onboarding-textSecondary">Resource allocation</span>
                     </div>
                   </div>
                 </div>
