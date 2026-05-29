@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/shared/components/ui/Card';
 import { Button } from '@/shared/components/ui/Button';
 import { NexusCareLogo } from '@/shared/components/ui/NexusCareLogo';
-import { Stethoscope, Building2, ArrowRight } from 'lucide-react';
+import { Stethoscope, Building2, ArrowRight, Sparkles } from 'lucide-react';
 
 type Role = 'health-worker' | 'hospital' | null;
 
@@ -11,6 +11,15 @@ export function RoleSelection() {
   const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState<Role>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [showCards, setShowCards] = useState(false);
+
+  // Staggered animations
+  useEffect(() => {
+    setIsVisible(true);
+    const timer = setTimeout(() => setShowCards(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleRoleSelect = (role: Role) => {
     setSelectedRole(role);
@@ -62,126 +71,143 @@ export function RoleSelection() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3FAFF] flex items-center justify-center p-4">
-      <div className="w-full max-w-lg">
-        {/* Main Role Selection Card */}
-        <Card className="bg-white border border-gray-200 shadow-xl rounded-3xl overflow-hidden min-h-[90vh] sm:min-h-[80vh] flex flex-col">
-          {/* Header */}
-          <div className="bg-white px-6 py-4 border-b border-gray-100 flex-shrink-0">
-            <div className="flex items-center justify-between">
-              <NexusCareLogo size="sm" />
-              <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
-                <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-              </div>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#F3FAFF] via-[#F8FBFF] to-[#EDF7FF] flex flex-col">
+      {/* Header with Logo */}
+      <div className="bg-white/80 backdrop-blur-sm px-6 py-4 border-b border-gray-100/50 flex-shrink-0">
+        <div className="flex items-center justify-between">
+          <div className="transition-transform duration-300 hover:scale-105">
+            <NexusCareLogo size="sm" />
           </div>
-
-          {/* Progress Bar */}
-          <div className="bg-white px-6 pb-2">
-            <div className="w-full bg-gray-200 rounded-full h-1">
-              <div className="bg-gradient-to-r from-onboarding-primaryGreen to-onboarding-primaryBlue h-1 rounded-full w-3/4"></div>
-            </div>
+          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-inner">
+            <div className="w-2 h-2 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full animate-pulse"></div>
           </div>
+        </div>
+      </div>
 
-          <CardContent className="px-6 py-8 flex-1 flex flex-col justify-center">
-            {/* Title */}
-            <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold text-onboarding-textPrimary mb-4">
+      {/* Enhanced Progress Bar */}
+      <div className="bg-white/80 backdrop-blur-sm px-6 pb-2">
+        <div className="w-full bg-gray-200/80 rounded-full h-1.5 overflow-hidden">
+          <div className="bg-gradient-to-r from-onboarding-primaryGreen to-onboarding-primaryBlue h-full rounded-full w-3/4 transition-all duration-1000 ease-out shadow-sm"></div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col justify-center px-6 py-8">
+        <div className="w-full max-w-4xl mx-auto">
+          {/* Enhanced Title with staggered animation */}
+          <div className={`text-center mb-12 transition-all duration-700 delay-200 ease-out ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+          }`}>
+            <div className="relative inline-block">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-onboarding-textPrimary to-gray-700 bg-clip-text text-transparent mb-4">
                 Choose Your Professional Role
               </h1>
-              <p className="text-sm text-onboarding-textSecondary px-4">
-                Select your medical specialization to view clinical opportunities tailored to your expertise.
-              </p>
+              <Sparkles className="absolute -top-2 -right-4 w-6 h-6 text-yellow-400 animate-pulse" />
             </div>
+            <p className="text-base text-onboarding-textSecondary px-4 leading-relaxed max-w-2xl mx-auto">
+              Select your medical specialization to view clinical opportunities tailored to your expertise.
+            </p>
+          </div>
 
-            {/* Role Cards - Two Column Layout */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              {/* Health Workers Card */}
-              <div
-                onClick={() => handleRoleSelect('health-worker')}
-                className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-200 text-center ${
-                  selectedRole === 'health-worker'
-                    ? 'border-teal-400 bg-white'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-4">
-                    <Stethoscope className="w-8 h-8 text-teal-600" />
-                  </div>
-                  <h3 className="font-bold text-onboarding-textPrimary mb-3 text-lg">
-                    Health Workers
-                  </h3>
-                  <p className="text-sm text-onboarding-textSecondary leading-relaxed mb-4 px-2">
-                    Medical professionals providing direct patient care, consultations, and clinical services.
-                  </p>
-                  
-                  {/* Feature List */}
-                  <div className="space-y-2 text-left w-full">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Direct patient consultations</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Clinical assessments</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Treatment planning</span>
-                    </div>
-                  </div>
+          {/* Role Selection - Standalone Cards without Container */}
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto transition-all duration-700 delay-400 ease-out ${
+            showCards ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+          }`}>
+            {/* Health Workers Card - Standalone */}
+            <div
+              onClick={() => handleRoleSelect('health-worker')}
+              className={`p-8 rounded-2xl border-2 cursor-pointer transition-all duration-300 ease-out text-center transform hover:scale-[1.02] ${
+                selectedRole === 'health-worker'
+                  ? 'border-teal-400 bg-teal-50/80 shadow-lg shadow-teal-200/50'
+                  : 'border-gray-200 bg-transparent hover:border-gray-300 hover:bg-white/30'
+              }`}
+            >
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-300 ${
+                  selectedRole === 'health-worker' 
+                    ? 'bg-gradient-to-br from-teal-100 to-teal-200' 
+                    : 'bg-gradient-to-br from-teal-50 to-teal-100'
+                }`}>
+                  <Stethoscope className={`w-10 h-10 transition-all duration-300 ${
+                    selectedRole === 'health-worker' ? 'text-teal-700 scale-110' : 'text-teal-600'
+                  }`} />
                 </div>
-              </div>
-
-              {/* Hospital Administrator Card */}
-              <div
-                onClick={() => handleRoleSelect('hospital')}
-                className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-200 text-center ${
-                  selectedRole === 'hospital'
-                    ? 'border-teal-400 bg-white'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                    <Building2 className="w-8 h-8 text-gray-600" />
-                  </div>
-                  <h3 className="font-bold text-onboarding-textPrimary mb-3 text-lg">
-                    Hospital Administrator
-                  </h3>
-                  <p className="text-sm text-onboarding-textSecondary leading-relaxed mb-4 px-2">
-                    Healthcare facility management, staff coordination, and operational oversight.
-                  </p>
-                  
-                  {/* Feature List */}
-                  <div className="space-y-2 text-left w-full">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Staff management</span>
+                <h3 className="font-bold text-onboarding-textPrimary mb-4 text-xl">
+                  Health Workers
+                </h3>
+                <p className="text-sm text-onboarding-textSecondary leading-relaxed mb-6 px-4">
+                  Medical professionals providing direct patient care, consultations, and clinical services.
+                </p>
+                
+                {/* Feature List */}
+                <div className="space-y-3 text-left w-full">
+                  {[
+                    'Direct patient consultations',
+                    'Clinical assessments', 
+                    'Treatment planning'
+                  ].map((feature, index) => (
+                    <div key={feature} className={`flex items-center space-x-3 transition-all duration-300 delay-${index * 100}`}>
+                      <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-green-500 rounded-full"></div>
+                      <span className="text-sm text-onboarding-textSecondary">{feature}</span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Shift scheduling</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-                      <span className="text-xs text-onboarding-textSecondary">Resource allocation</span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Continue Button */}
+            {/* Hospital Administrator Card - Standalone */}
+            <div
+              onClick={() => handleRoleSelect('hospital')}
+              className={`p-8 rounded-2xl border-2 cursor-pointer transition-all duration-300 ease-out text-center transform hover:scale-[1.02] ${
+                selectedRole === 'hospital'
+                  ? 'border-teal-400 bg-teal-50/80 shadow-lg shadow-teal-200/50'
+                  : 'border-gray-200 bg-transparent hover:border-gray-300 hover:bg-white/30'
+              }`}
+            >
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-300 ${
+                  selectedRole === 'hospital' 
+                    ? 'bg-gradient-to-br from-gray-100 to-gray-200' 
+                    : 'bg-gradient-to-br from-gray-50 to-gray-100'
+                }`}>
+                  <Building2 className={`w-10 h-10 transition-all duration-300 ${
+                    selectedRole === 'hospital' ? 'text-gray-700 scale-110' : 'text-gray-600'
+                  }`} />
+                </div>
+                <h3 className="font-bold text-onboarding-textPrimary mb-4 text-xl">
+                  Hospital Administrator
+                </h3>
+                <p className="text-sm text-onboarding-textSecondary leading-relaxed mb-6 px-4">
+                  Healthcare facility management, staff coordination, and operational oversight.
+                </p>
+                
+                {/* Feature List */}
+                <div className="space-y-3 text-left w-full">
+                  {[
+                    'Staff management',
+                    'Shift scheduling',
+                    'Resource allocation'
+                  ].map((feature, index) => (
+                    <div key={feature} className={`flex items-center space-x-3 transition-all duration-300 delay-${index * 100}`}>
+                      <div className="w-2 h-2 bg-gradient-to-r from-teal-400 to-teal-500 rounded-full"></div>
+                      <span className="text-sm text-onboarding-textSecondary">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced Continue Button */}
+          <div className="max-w-md mx-auto">
             <Button
               onClick={handleContinue}
               disabled={!selectedRole || isLoading}
-              className={`w-full font-medium py-4 rounded-xl transition-all duration-200 ${
+              className={`w-full font-medium py-4 rounded-xl transition-all duration-300 ease-out transform ${
                 selectedRole
-                  ? 'bg-gradient-to-r from-onboarding-primaryGreen to-onboarding-primaryBlue text-white hover:opacity-90 shadow-md'
+                  ? 'bg-gradient-to-r from-onboarding-primaryGreen to-onboarding-primaryBlue text-white hover:opacity-90 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]'
                   : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              }`}
+              } ${isLoading ? 'animate-pulse' : ''}`}
             >
               {isLoading ? (
                 <div className="flex items-center justify-center space-x-2">
@@ -189,22 +215,24 @@ export function RoleSelection() {
                   <span>Continue</span>
                 </div>
               ) : (
-                <div className="flex items-center justify-center space-x-2">
+                <div className="flex items-center justify-center space-x-2 group">
                   <span>Continue</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </div>
               )}
             </Button>
 
-            {/* Terms */}
-            <p className="text-xs text-onboarding-textSecondary text-center mt-6 leading-relaxed">
+            {/* Enhanced Support Link */}
+            <p className={`text-sm text-onboarding-textSecondary text-center mt-6 leading-relaxed transition-all duration-700 delay-800 ease-out ${
+              showCards ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+            }`}>
               Need help choosing your role?{' '}
-              <button className="text-secondary-600 hover:text-secondary-700 font-medium">
+              <button className="text-secondary-600 hover:text-secondary-700 font-medium transition-colors duration-200 hover:underline">
                 Contact Support
               </button>
             </p>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
